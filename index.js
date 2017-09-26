@@ -11,9 +11,15 @@ app.use(jsonParser());
 app.get('/api/shoes', function(req, res) {
   shiftModel.find({}, function(err, allShoes) {
     if (err) {
-      return err;
+      return res.json({
+        status: "error",
+        error: err
+      });
     } else {
-      res.json(allShoes)
+      res.json({
+        status: "success",
+        data: allShoes
+      });
     }
   })
 
@@ -26,9 +32,15 @@ app.get('/api/shoes/brand/:brandname', function(req, res) {
     brand: brandname
   }, function(err, brandShoes) {
     if (err) {
-      return err;
+      return res.json({
+        status: "error",
+        error: err
+      })
     } else {
-      res.json(brandShoes)
+      res.json({
+        status: "success",
+        data: brandShoes
+      })
     }
   })
 
@@ -41,9 +53,15 @@ app.get('/api/shoes/size/:size', function(req, res) {
     size: shoeSize
   }, function(err, sizeShoe) {
     if (err) {
-      return err;
+      return res.json({
+        status: "error",
+        error: err
+      });
     } else {
-      res.json(sizeShoe)
+      res.json({
+        status: "success",
+        data: sizeShoe
+      })
     }
   })
 
@@ -59,11 +77,17 @@ app.get('/api/shoes/brand/:brandname/size/:size', function(req, res) {
   }, function(err, dataFiltering) {
     console.log(dataFiltering);
     if (err) {
-      return err;
+      return res.json({
+        status: "error",
+        error: err
+      })
     } else {
       res.json({
-        brandname: dataFiltering,
-        size: dataFiltering
+        status: "success",
+        data: {
+          brandname: dataFiltering,
+          size: dataFiltering
+        }
       })
     }
   })
@@ -72,49 +96,70 @@ app.get('/api/shoes/brand/:brandname/size/:size', function(req, res) {
 
 //Update the stock.
 app.post('/api/shoes/sold/:id', function(req, res) {
-      var id = req.body
-      shiftModel.findOneAndUpdate({
-          _id: ObjectId(id)
-        }, {
-          $dec: {
-            "in_stock": -1
-          },function(err, updateDate){
-            if (err) {
-              return err;
-            }
-            else {
-              res.send(updateDate)
-            }
-          }
-  })
-})
-    //Add new shoe.
-    app.post('/api/shoes', function(req, res) {
-      var shoes = req.body
-      shiftModel.findOne({}, function(err, shoeResults) {
-        if (err) {
-          return err;
-        } else {
+  var id = req.params.id;
 
-          console.log('shoes', shoes);
-          shiftModel.create({
-            brand: shoes.brand,
-            color: shoes.color,
-            price: shoes.price,
-            size: shoes.size,
-            in_stock: shoes.in_stock
-          }, function(err, shoesData) {
-            if (err) {
-              return err;
-            }
-            console.log(shoesData);
-            res.send(shoesData)
+  console.log(shiftModel.findOneAndUpdate);
+
+  shiftModel.findOneAndUpdate({
+      _id: ObjectId(id)
+    }, {
+      $inc: {
+        "in_stock": -1
+      }
+    },
+
+    {
+      upsert: false
+    },
+
+    function(err, updatedShoeInfo) {
+      if (err) {
+        return res.json({
+          status: "error",
+          error: err,
+          data: []
+        });
+      } else {
+        res.json({
+          status: "success",
+          data: updatedShoeInfo
+        })
+      }
+    })
+})
+//Add new shoe.
+app.post('/api/shoes', function(req, res) {
+  var shoes = req.body
+  shiftModel.findOne({}, function(err, shoeResults) {
+    if (err) {
+      return err;
+    } else {
+
+      console.log('shoes', shoes);
+      shiftModel.create({
+        brand: shoes.brand,
+        color: shoes.color,
+        price: shoes.price,
+        size: shoes.size,
+        in_stock: shoes.in_stock
+      }, function(err, shoesData) {
+        if (err) {
+          return res.json({
+            status: "error",
+            error: err
           });
         }
-      })
-    })
+        console.log(shoesData);
+        res.json({
+          status: "success",
+          data: shoesData
+        })
+      });
+    }
+  })
+})
 
-    var port = process.env.PORT || 3003
-    var server = app.listen(port, function() {
-      console.log("Started app on port : " + port)
-    });
+var port = process.env.PORT || 3003
+var server = app.listen(port, function() {
+  console.log("Started app on port : " + port)
+});

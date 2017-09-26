@@ -1,0 +1,5 @@
+- It is available to github under the name waiters availability.
+- Install NodeJs because it is run by nodejs and is tested.
+- Install package json to install dependecies.
+- Install Express and Express handlebars.
+- npm init just call all packect json file.
