@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link rel="stylesheet" href="shoe.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+  <script class="shoeTemplate" type="text/handlebars-x">
+    {{#each color}}
+    <option>{{this}}</option>
+    {{/each}}
+    {{#each size}}
+    <option>{{this}}</option>
+    {{/each}}
+    {{#each brand}}
+    <option>{{this}}</option>
+    {{/each}}
+  </script>
+<!-- <script class="shoeFilter" type="text/handlebars-x">
+<table>
+
+  <thead>
+    <tr>
+      <th>Color</th>
+      <th>Size</th>
+      <th>Price</th>
+      <th>Brand</th>
+      <th>Stock</th>
+    </tr>
+  </thead>
+
+
+  {{#each shoes}}
+  <tr>
+    <td>{{this.color}}</td>
+    <td>{{this.size}}</td>
+    <td>{{this.price}}</td>
+    <td>{{this.brand}}</td>
+    <td>{{this.in_stock}}</td>
+  </tr>
+  {{/each}}
+  </table>
+</script> -->
+<!-- </script> -->
+</head>
+
+<body>
+  <h1>Shoe Catalogue</h1>
+
+  <script class="shoesList" type="text/handlebars-x">
+  <table>
+
+  <thead>
+  <tr>
+  <th>Color</th>
+  <th>Size</th>
+  <th>Price</th>
+  <th>Brand</th>
+  <th>Stock</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  {{#each shoeData}}
+  <tr>
+  <td>{{this.color}}</td>
+  <td>{{this.brand}}</td>
+  <td>{{this.price}}</td>
+  <td>{{this.size}}</td>
+  <td>{{this.in_stock}}</td>
+  </tr>
+  {{/each}}
+  </tbody>
+  </table>
+  </script>
+  <input type="button" name="" value="Show All" class="show">
+  <br></br>
+
+  <h2>Add</h2>
+  Color: <input type="text" name="Color" class="colors" value=""placeholder="Please input color"required="">
+  <br>
+  Size: <input type="text" name="Size" class="sizes" value=""placeholder="Please input size"required="">
+  <br>
+  Brand: <input type="text" name="Brand" class="brands" value=""placeholder="Please input brand"required="">
+  <br>
+  Price: <input type="text" name="Price" class="prices" value=""placeholder="Please input price"required="">
+  <br>
+  Stock: <input type="text" name="Stock" class="stocks" value=""placeholder="Please input stock"required="">
+  <br>
+  <input type="button" name="" value="Add" class="add">
+
+  <div id="output"></div>
+  <div class="dropdown">
+    <h3>Filter</h3>
+    <select class="colorDisplay"></select>
+    <select class="sizeDisplay"></select>
+    <select class="brandDiplay"></select>
+  </div>
+  <div class="filters"></div>
+  <input type="button" value="Filter" class="filterBtn">
+</body>
+<script src="shoe_api.js" charset="utf-8"></script>
+
+</html>

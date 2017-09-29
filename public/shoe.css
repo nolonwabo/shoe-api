@@ -1,3 +1,40 @@
+h1{
+  background-color: black;
+  color: red;
+  text-align: center;
+  font-size: 60px;
+  border-radius: 10em;
+
+}
 body{
-  background-color: brown;
+  font-family: 'Aguafina Script'; font-size: 22px;
+  background-color: #C63D0F;
+}
+.show{
+  border-radius: 10em;
+
+}
+.filterBtn{
+  border-radius: 10em;
+}
+.add{
+  border-radius: 10em;
+}
+.sizeDisplay{
+  margin-left: 0.5em;
+}
+.sizes{
+  margin-left: 2em;
+}
+.colors{
+  margin-left: 0.9em;
+}
+.brands{
+  margin-left: 0.6em;
+}
+.prices{
+  margin-left: 1em;
+}
+.stocks{
+  margin-left: 0.8em;
 }
