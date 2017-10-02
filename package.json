@@ -12,7 +12,6 @@
     "body-parser": "^1.15.2",
     "express": "^4.13.4",
     "express-handlebars": "^3.0.0",
-    "json-parser": "^1.1.5",
     "mongoose": "^4.11.11",
     "morgan": "^1.8.2",
     "pkg": "^4.2.4"

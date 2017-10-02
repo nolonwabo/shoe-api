@@ -8,9 +8,9 @@ mongoose.connect(MongoURL, {
 
 var storeShoes = mongoose.model('storeShoes', {
   color: String,
+  size: Number,
   brand: String,
   price: Number,
-  size: Number,
   in_stock: Number
  });
 
