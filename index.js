@@ -47,7 +47,7 @@ app.get('/api/shoes/brand/:brandname', function(req, res) {
       })
     } else {
       res.json({
-        status: "success",
+        // status: "success",
         data: brandShoes
       })
     }
@@ -118,7 +118,8 @@ app.post('/api/shoes/sold/:id', function(req, res) {
     },
 
     {
-      upsert: false
+      upsert: false,
+      new: true
     },
 
     function(err, updatedShoeInfo) {
@@ -128,6 +129,9 @@ app.post('/api/shoes/sold/:id', function(req, res) {
           error: err,
           data: []
         });
+        if(updatedShoeInfo.in_stock < 1){
+          updatedShoeInfo.remove()
+        }
       } else {
         res.json({
           status: "success",

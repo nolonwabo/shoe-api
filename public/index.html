@@ -3,54 +3,29 @@
 
 <head>
   <meta charset="utf-8">
-  <title></title>
   <link rel="stylesheet" href="shoe.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-  <script class="shoeTemplate" type="text/handlebars-x">
-    {{#each color}}
-    <option>{{this}}</option>
-    {{/each}}
-    {{#each size}}
-    <option>{{this}}</option>
-    {{/each}}
-    {{#each brand}}
-    <option>{{this}}</option>
-    {{/each}}
-  </script>
-<!-- <script class="shoeFilter" type="text/handlebars-x">
-<table>
-
-  <thead>
-    <tr>
-      <th>Color</th>
-      <th>Size</th>
-      <th>Price</th>
-      <th>Brand</th>
-      <th>Stock</th>
-    </tr>
-  </thead>
-
-
-  {{#each shoes}}
-  <tr>
-    <td>{{this.color}}</td>
-    <td>{{this.size}}</td>
-    <td>{{this.price}}</td>
-    <td>{{this.brand}}</td>
-    <td>{{this.in_stock}}</td>
-  </tr>
-  {{/each}}
-  </table>
-</script> -->
-<!-- </script> -->
 </head>
+ <title></title>
+ <body>
+  <script class="shoeTemplate" type="text/x-handlebars">
+    <select id="sizeFilter">
+    {{#each shoeData}}
+    <option>{{this.size}}</option>
+    {{/each}}
+    </select>
+    <select id="brandFilter">
+    {{#each shoeData}}
+    <option value={{this.brand}}>{{this.brand}}</option>
+    {{/each}}
+    </select>
+  </script>
 
-<body>
   <h1>Shoe Catalogue</h1>
 
-  <script class="shoesList" type="text/handlebars-x">
+  <script class="shoesList" type="text/x-handlebars">
   <table>
 
   <thead>
@@ -70,16 +45,17 @@
   <td>{{this.size}}</td>
   <td>{{this.price}}</td>
   <td>{{this.brand}}</td>
-  <td>{{this.in_stock}}</td>
+  <td>{{this.in_stock}}<button value={{_id}} class="btn-primary" id="buyBtn" onclick='sellStock("{{_id}}")'>Buy</td>
   </tr>
   {{/each}}
   </tbody>
   </table>
   </script>
-  <input type="button" name="" value="Show All" class="show">
+  <div id="buyStock"></div>
+<!--  <input type="button" name="" value="Show All" class="show">-->
   <br></br>
 
-  <h2>Add</h2>
+  <h2>Add Stock</h2>
   Color: <input type="text" name="Color" class="colors" value=""placeholder="Please input color"required>
   <br>
   Size: <input type="text" name="Size" class="sizes" value=""placeholder="Please input size"required>
@@ -91,16 +67,11 @@
   Stock: <input type="text" name="Stock" class="stocks" value=""placeholder="Please input stock"required>
   <br>
   <input type="button" name="" value="Add" class="add">
-
   <div id="output"></div>
-  <div class="dropdown">
-    <h3>Filter</h3>
-    <select class="colorDisplay"></select>
-    <select class="sizeDisplay"></select>
-    <select class="brandDiplay"></select>
+<div class="dropdown">
   </div>
   <div class="filters"></div>
-  <input type="button" value="Filter" class="filterBtn">
+ <input type="button" value="Filter" class="filterBtn">
 </body>
 <script src="shoe_api.js" charset="utf-8"></script>
 
