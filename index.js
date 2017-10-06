@@ -129,15 +129,16 @@ app.post('/api/shoes/sold/:id', function(req, res) {
           error: err,
           data: []
         });
-        if(updatedShoeInfo.in_stock < 1){
+      }
+        if(updatedShoeInfo.in_stock <= 0){
           updatedShoeInfo.remove()
-        }
-      } else {
+
         res.json({
           status: "success",
           data: updatedShoeInfo
         })
       }
+
     })
 })
 //Add new shoe.
@@ -171,6 +172,44 @@ app.post('/api/shoes', function(req, res) {
     }
   })
 })
+
+app.get('/api/size', function(req, res) {
+shiftModel.find({},function(err, sizeDropdown){
+  var sizeArray =[];
+  var sizeObject ={};
+  for (var i = 0; i < sizeDropdown.length; i++) {
+  var sizeLoop= sizeDropdown[i];
+  if(sizeObject[sizeLoop.size] === undefined){
+    sizeObject[sizeLoop.size]=sizeLoop.size;
+    sizeArray.push(sizeLoop.size);
+  }
+  }
+  if(err){
+    return(err)
+  }
+  res.json({sizeArray})
+})
+
+});
+
+app.get('/api/brand', function(req, res) {
+shiftModel.find({},function(err, brandDropdown){
+  var brandArray =[];
+  var brandObject ={};
+  for (var i = 0; i < brandDropdown.length; i++) {
+  var brandLoop= brandDropdown[i];
+  if(brandObject[brandLoop.brand] === undefined){
+    brandObject[brandLoop.brand]=brandLoop.brand;
+    brandArray.push(brandLoop.brand);
+  }
+  }
+  if(err){
+    return(err)
+  }
+  res.json({brandArray})
+})
+
+});
 
 var port = process.env.PORT || 3003
 var server = app.listen(port, function() {

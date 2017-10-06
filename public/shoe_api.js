@@ -1,9 +1,12 @@
-//$(function() {
+$(function() {
   var shoeTemp = document.querySelector('.shoeTemplate').innerHTML;
   var shoesTemp = Handlebars.compile(shoeTemp);
 
   var shoeList = document.querySelector('.shoesList').innerHTML;
   var shoesList = Handlebars.compile(shoeList);
+
+  var shoeBrand = document.querySelector('.brandTemplate').innerHTML;
+  var shoeBrandDropdown = Handlebars.compile(shoeBrand);
 
   var table = document.getElementById('output');
   var dropdowns = document.querySelector('.dropdown');
@@ -34,6 +37,7 @@
     var brandV = document.querySelector('.brands');
     var priceV = document.querySelector('.prices');
     var stockV = document.querySelector('.stocks');
+
     $.ajax({
       url: 'http://localhost:3003/api/shoes',
       type: 'POST',
@@ -47,30 +51,24 @@
         in_stock: stockV.value
       },
       success: function(data) {
-        console.log('success', data.data);
-        table.innerHTML = shoesList({
-          shoeData: data.data
-        })
+        // console.log('success', data.data);
+        //  table.innerHTML = shoesList({
+        //    shoeData: data.allShoes
+        //  })
+        //  table.innerHTML = shoesList({
+        //    shoeData: allShoes.data
+        //  })
       },
       error: function(error) {
         console.log(error);
         alert(error);
       }
     })
-
-
   });
 
   var filterButton = document.querySelector('.filterBtn').innerHTML;
   $('.filterBtn').on('click', function(){
-    alert("button");
-
-  console.log(filterButton);
 var brandFilter = document.querySelector('#brandFilter').value;
-console.log(brandFilter);
-// var brandSelected =
-//   brand: brandFilter.value
-// }
 $.ajax({
   url: 'http://localhost:3003/api/shoes/brand/'+brandFilter,
   type: 'GET',
@@ -83,8 +81,6 @@ $.ajax({
 alert('error')
 }
 })
-console.log(brandFilter);
-
 })
 
 $('.filterBtn').on('click', function(){
@@ -124,10 +120,6 @@ $('.filterBtn').on('click', function(){
 var shoeInStock=[];
 function sellStock(id){
 
-  //console.log(e);
-  //console.log(event.target.value);
-  // var shoesId = e.target.value;
-  //console.log(shoesId);
   $.ajax({
     url: 'http://localhost:3003/api/shoes/sold/' +id,
     type: 'POST',
@@ -138,17 +130,32 @@ function sellStock(id){
         if(results._id==data.data._id){
           results.in_stock=data.data.in_stock;
         }
-      })
 
-      // table.innerHTML = shoesList({
-      //   shoeData: data.data
-      // })
+      })
     },
     error: function(error){
       alert('error')
     }
   })
 }
-// sellStock()
+var sizedrop = document.querySelector('.sizedrop');
+$.ajax({
+  url: 'http://localhost:3003/api/size',
+  type: 'GET',
+  success: function(sizeDropdownValue){
+    sizedrop.innerHTML = shoesTemp({
+      size: sizeDropdownValue.sizeArray
+    })
+  }
+})
 
-//});
+$.ajax({
+  url: 'http://localhost:3003/api/brand',
+  type: 'GET',
+  success: function(brandDropdownValue){
+    dropdowns.innerHTML = shoeBrandDropdown({
+      brand: brandDropdownValue.brandArray
+    })
+  }
+})
+})

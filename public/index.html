@@ -12,13 +12,15 @@
  <body>
   <script class="shoeTemplate" type="text/x-handlebars">
     <select id="sizeFilter">
-    {{#each shoeData}}
-    <option>{{this.size}}</option>
+    {{#each size}}
+    <option>{{this}}</option>
     {{/each}}
     </select>
+  </script>
+    <script class="brandTemplate" type="text/x-handlebars">
     <select id="brandFilter">
-    {{#each shoeData}}
-    <option value={{this.brand}}>{{this.brand}}</option>
+    {{#each brand}}
+    <option>{{this}}</option>
     {{/each}}
     </select>
   </script>
@@ -39,6 +41,7 @@
   </thead>
 
   <tbody>
+
   {{#each shoeData}}
   <tr>
   <td>{{this.color}}</td>
@@ -70,6 +73,7 @@
   <div id="output"></div>
 <div class="dropdown">
   </div>
+  <div class="sizedrop"></div>
   <div class="filters"></div>
  <input type="button" value="Filter" class="filterBtn">
 </body>
