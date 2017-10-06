@@ -143,31 +143,39 @@ app.post('/api/shoes/sold/:id', function(req, res) {
 })
 //Add new shoe.
 app.post('/api/shoes', function(req, res) {
-  var shoes = req.body
-  shiftModel.findOne({}, function(err, shoeResults) {
+  var shoes = req.body;
+var brand= shoes.brand;
+var color= shoes.color;
+var price= shoes.price;
+var size= shoes.size;
+var in_stock= shoes.in_stock;
+  shiftModel.findOneAndUpdate({
+    brand: brand,
+    color: color,
+    price: price,
+    size: size
+  }, {
+    $inc:{
+      in_stock: in_stock
+    }
+  },
+  function(err, shoeResults) {
     if (err) {
       return err;
-    } else {
-
-      console.log('shoes', shoes);
+    } else if(!shoeResults){
       shiftModel.create({
-        brand: shoes.brand,
-        color: shoes.color,
-        price: shoes.price,
-        size: shoes.size,
-        in_stock: shoes.in_stock
-      }, function(err, shoesData) {
-        if (err) {
-          return res.json({
-            status: "error",
-            error: err
-          });
-        }
-        console.log(shoesData);
-        res.json({
-          status: "success",
-          data: shoesData
-        })
+        brand: brand,
+        color: color,
+        price: price,
+        size: size,
+        in_stock: in_stock
+      },
+     function(err, shoesData) {
+      if (err) {
+        return err;
+      }
+      res.json({shoesData})
+
       });
     }
   })
