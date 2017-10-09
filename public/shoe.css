@@ -10,31 +10,47 @@ body{
   font-family: 'Aguafina Script'; font-size: 22px;
   background-color: #C63D0F;
 }
-.show{
-  border-radius: 10em;
-
-}
 .filterBtn{
-  border-radius: 10em;
+  background-color: white;
+  color: black;
+  border: 2px solid #4CAF50;
 }
-.add{
-  border-radius: 10em;
+.Add{
+  background-color: white;
+  color: black;
+  border: 2px solid #4CAF50;
 }
 .sizeDisplay{
   margin-left: 0.5em;
+
 }
 .sizes{
   margin-left: 2em;
+  width: 300px;
+ height: 30px;
+ border: 1px solid black;
 }
 .colors{
   margin-left: 0.9em;
+  width: 300px;
+ height: 30px;
+ border: 1px solid black;
 }
 .brands{
   margin-left: 0.6em;
+  width: 200px;
+ height: 30px;
+ border: 1px solid black;
 }
 .prices{
   margin-left: 1em;
+  width: 300px;
+ height: 30px;
+ border: 1px solid black;
 }
 .stocks{
   margin-left: 0.8em;
+  width: 300px;
+ height: 30px;
+ border: 1px solid black;
 }

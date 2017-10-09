@@ -1,4 +1,29 @@
-$(function() {
+
+//   // TODO - looks weird ????
+//   function filterData(){
+//   $('.filterBtn').on('click', function() {
+//     var brandFilter = document.querySelector('#brandFilter').value;
+//
+//     $.ajax({
+//       url: '/api/shoes/brand/' + brandFilter,
+//       type: 'GET',
+//       success: function(data) {
+//         table.innerHTML = shoesList({
+//           shoeData: data.data
+//         })
+//       },
+//       error: function(error) {
+//         alert('error')
+//       }
+//     })
+//   })
+//   //  check if brand selected only
+//
+
+
+
+
+
   var shoeTemp = document.querySelector('.shoeTemplate').innerHTML;
   var shoesTemp = Handlebars.compile(shoeTemp);
 
@@ -11,24 +36,25 @@ $(function() {
   var table = document.getElementById('output');
   var dropdowns = document.querySelector('.dropdown');
   var filterV = document.querySelector('.filters');
-
+function showAllStock(){
   $.ajax({
-    url: 'http://localhost:3003/api/shoes',
+    url: '/api/shoes',
     type: 'GET',
     success: function(allShoes) {
       console.log(allShoes);
       table.innerHTML = shoesList({
         shoeData: allShoes.data
       })
-      dropdowns.innerHTML = shoesTemp({
-        shoeData: allShoes.data
-      })
+
     },
     // error: function(error) {
     //   alert('err');
     // }
   });
+}
+showAllStock();
 
+function addStock(){
   var add = document.querySelector('.add');
   add.addEventListener('click', function() {
     var add = document.querySelector('.add');
@@ -39,7 +65,7 @@ $(function() {
     var stockV = document.querySelector('.stocks');
 
     $.ajax({
-      url: 'http://localhost:3003/api/shoes',
+      url: '/api/shoes',
       type: 'POST',
       async: true,
       dataType: "json",
@@ -51,13 +77,8 @@ $(function() {
         in_stock: stockV.value
       },
       success: function(data) {
-        // console.log('success', data.data);
-        //  table.innerHTML = shoesList({
-        //    shoeData: data.allShoes
-        //  })
-        //  table.innerHTML = shoesList({
-        //    shoeData: allShoes.data
-        //  })
+        showAllStock();
+        addStock();
       },
       error: function(error) {
         console.log(error);
@@ -65,12 +86,13 @@ $(function() {
       }
     })
   });
-
+}
+addStock();
   var filterButton = document.querySelector('.filterBtn').innerHTML;
   $('.filterBtn').on('click', function(){
 var brandFilter = document.querySelector('#brandFilter').value;
 $.ajax({
-  url: 'http://localhost:3003/api/shoes/brand/'+brandFilter,
+  url: '/api/shoes/brand/'+brandFilter,
   type: 'GET',
   success: function(data){
     table.innerHTML = shoesList({
@@ -86,7 +108,7 @@ alert('error')
 $('.filterBtn').on('click', function(){
   var sizeFilter = document.querySelector('#sizeFilter').value;
   $.ajax({
-    url: 'http://localhost:3003/api/shoes/size/'+sizeFilter,
+    url: '/api/shoes/size/'+sizeFilter,
     type: 'GET',
     success: function(data){
       table.innerHTML = shoesList({
@@ -117,30 +139,39 @@ $('.filterBtn').on('click', function(){
 //     }
 //   })
 // })
-var shoeInStock=[];
+//var shoeInStock=[];
+console.log(shoeInStock);
 function sellStock(id){
-
+console.log(id);
   $.ajax({
-    url: 'http://localhost:3003/api/shoes/sold/' +id,
+    url: '/api/shoes/sold/' +id,
     type: 'POST',
     async: true,
     dataType: "json",
     success: function(data){
-      shoeInStock.forEach(function(results){
-        if(results._id==data.data._id){
-          results.in_stock=data.data.in_stock;
-        }
-
-      })
+        showAllStock();
+      // console.log(data);
+      // console.log("------");
+      // shoeInStock.forEach(function(results){
+      //   if(results._id==data.data._id){
+      //     results.in_stock=data.data.in_stock;
+      //   }
+      // })
     },
     error: function(error){
+      console.log("Hi");
       alert('error')
     }
   })
+  showAllStock();
 }
+
+
+
+
 var sizedrop = document.querySelector('.sizedrop');
 $.ajax({
-  url: 'http://localhost:3003/api/size',
+  url: '/api/size',
   type: 'GET',
   success: function(sizeDropdownValue){
     sizedrop.innerHTML = shoesTemp({
@@ -149,13 +180,13 @@ $.ajax({
   }
 })
 
+var brandDrop = document.querySelector('.brandDrop');
 $.ajax({
-  url: 'http://localhost:3003/api/brand',
+  url: '/api/brand',
   type: 'GET',
   success: function(brandDropdownValue){
-    dropdowns.innerHTML = shoeBrandDropdown({
+    brandDrop.innerHTML = shoeBrandDropdown({
       brand: brandDropdownValue.brandArray
     })
   }
-})
 })

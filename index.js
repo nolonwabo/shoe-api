@@ -1,7 +1,6 @@
 "use strict";
 var express = require('express');
 var app = express();
-//var jsonParser = require('jsonParser');
 var shiftModel = require('./model');
 var ObjectId = require("mongodb").ObjectId;
 var bodyParser = require('body-parser');
@@ -12,7 +11,6 @@ app.use(function(req, res, next) {
         next();
 })
 app.use(express.static('public'));
-//app.use(jsonParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 

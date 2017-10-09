@@ -12,15 +12,17 @@
  <body>
   <script class="shoeTemplate" type="text/x-handlebars">
     <select id="sizeFilter">
+      <option value="" >Please select a size</option>
     {{#each size}}
-    <option>{{this}}</option>
+      <option value="{{this}}" >{{this}}</option>
     {{/each}}
     </select>
   </script>
     <script class="brandTemplate" type="text/x-handlebars">
     <select id="brandFilter">
+    <option value="">Please select a brand</option>
     {{#each brand}}
-    <option>{{this}}</option>
+    <option value="{{this}}">{{this}}</option>
     {{/each}}
     </select>
   </script>
@@ -29,6 +31,29 @@
 
   <script class="shoesList" type="text/x-handlebars">
   <table>
+
+  <style>
+  table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 60%;
+  }
+
+  td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+  }
+
+  tr:nth-child(even) {
+      background-color: #dddddd;
+  }
+  </style>
+  </head>
+  <body>
+
+  <table>
+
 
   <thead>
   <tr>
@@ -48,16 +73,13 @@
   <td>{{this.size}}</td>
   <td>{{this.price}}</td>
   <td>{{this.brand}}</td>
-  <td>{{this.in_stock}}<button value={{_id}} class="btn-primary" id="buyBtn" onclick='sellStock("{{_id}}")'>Buy</td>
+  <td>{{this.in_stock}}<button value={{_id}} class="btn-primary" id="buyBtn" onclick='sellStock("{{_id}}")'>Buy</button></td>
   </tr>
   {{/each}}
   </tbody>
   </table>
   </script>
-  <div id="buyStock"></div>
-<!--  <input type="button" name="" value="Show All" class="show">-->
   <br></br>
-
   <h2>Add Stock</h2>
   Color: <input type="text" name="Color" class="colors" value=""placeholder="Please input color"required>
   <br>
@@ -71,9 +93,9 @@
   <br>
   <input type="button" name="" value="Add" class="add">
   <div id="output"></div>
-<div class="dropdown">
-  </div>
+
   <div class="sizedrop"></div>
+  <div class="brandDrop"></div>
   <div class="filters"></div>
  <input type="button" value="Filter" class="filterBtn">
 </body>
