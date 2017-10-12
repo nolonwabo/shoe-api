@@ -1,10 +1,7 @@
-h1{
-  background-color: black;
-  color: red;
+#heading{
   text-align: center;
   font-size: 60px;
-  border-radius: 10em;
-
+  align-items: center;
 }
 body{
   font-family: 'Aguafina Script'; font-size: 22px;
@@ -24,33 +21,24 @@ body{
   margin-left: 0.5em;
 
 }
-.sizes{
-  margin-left: 2em;
-  width: 300px;
- height: 30px;
- border: 1px solid black;
+
+<table>
+
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
 }
-.colors{
-  margin-left: 0.9em;
-  width: 300px;
- height: 30px;
- border: 1px solid black;
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 18px;
+    width: 10%;
 }
-.brands{
-  margin-left: 0.6em;
-  width: 200px;
- height: 30px;
- border: 1px solid black;
+
+tr:nth-child(even) {
+    background-color: #dddddd;
 }
-.prices{
-  margin-left: 1em;
-  width: 300px;
- height: 30px;
- border: 1px solid black;
-}
-.stocks{
-  margin-left: 0.8em;
-  width: 300px;
- height: 30px;
- border: 1px solid black;
-}
+</style>

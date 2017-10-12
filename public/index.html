@@ -1,15 +1,77 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="shoe.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
 </head>
  <title></title>
  <body>
+
+   <nav class="navbar navbar-inverse">
+     <div class="container-fluid">
+       <div class="navbar-header">
+         <h1>Shoe Catalogue</h1>
+         <br>
+         <!--<a class="navbar-brand" href="#">Shoe Catalogue</a>-->
+         <ul class="nav navbar-nav">
+        <li class=""> <div class="sizedrop"></div></li>
+        <li class=""> <div class="brandDrop"></div></li>
+         <!--<div class="filters"></div>-->
+      <li>   <input type="button" value="Filter" class="btn btn-primary filterBtn"></li>
+       </ul>
+       </div>
+       <ul class="nav navbar-nav">
+      <li> <button type="button" id="addStock"class="btn btn-info btn-lg" data-toggle="modal" data-target="#addModal">Add Stock</button></li>
+       </ul>
+     </div>
+   </nav>
+
+<div class="container">
+   <div class="row">
+
+     <!-- Modal -->
+     <div id="addModal" class="modal fade" role="dialog">
+       <div class="modal-dialog">
+
+         <!-- Modal content-->
+         <div class="modal-content">
+           <div class="modal-header">
+             <button type="button" class="close" data-dismiss="modal">&times;</button>
+           </div>
+           <div class="modal-body">
+<form class="inputBox" action="index.html" method="post">
+  Color: <input type="text" name="color" class="form-control colors" value=""placeholder="Please input color"required>
+  <br>
+  Size: <input type="text" name="size" class="form-control sizes" value=""placeholder="Please input size"required>
+  <br>
+  Brand: <input type="text" name="brand" class="form-control brands" value=""placeholder="Please input brand"required>
+  <br>
+  Price: <input type="text" name="price" class="form-control prices" value=""placeholder="Please input price"required>
+  <br>
+  Stock: <input type="text" name="in_stock" class="form-control stocks" value=""placeholder="Please input stock"required>
+  <br>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default add-shoe-btn"  class="add">Add Shoe</button>
+</div>
+</form>
+         </div>
+
+       </div>
+     </div>
+   </div>
+     </div>
+
   <script class="shoeTemplate" type="text/x-handlebars">
     <select id="sizeFilter">
       <option value="" >Please select a size</option>
@@ -18,40 +80,16 @@
     {{/each}}
     </select>
   </script>
-    <script class="brandTemplate" type="text/x-handlebars">
-    <select id="brandFilter">
-    <option value="">Please select a brand</option>
-    {{#each brand}}
-    <option value="{{this}}">{{this}}</option>
-    {{/each}}
-    </select>
+  <script class="brandTemplate" type="text/x-handlebars">
+      <select id="brandFilter">
+      <option value="">Please select a brand</option>
+      {{#each brand}}
+      <option value="{{this}}">{{this}}</option>
+      {{/each}}
+      </select>
   </script>
 
-  <h1>Shoe Catalogue</h1>
-
   <script class="shoesList" type="text/x-handlebars">
-  <table>
-
-  <style>
-  table {
-      font-family: arial, sans-serif;
-      border-collapse: collapse;
-      width: 60%;
-  }
-
-  td, th {
-      border: 1px solid #dddddd;
-      text-align: left;
-      padding: 8px;
-  }
-
-  tr:nth-child(even) {
-      background-color: #dddddd;
-  }
-  </style>
-  </head>
-  <body>
-
   <table>
 
 
@@ -62,6 +100,7 @@
   <th>Price</th>
   <th>Brand</th>
   <th>Stock</th>
+  <th>Purchase</th>
   </tr>
   </thead>
 
@@ -73,31 +112,17 @@
   <td>{{this.size}}</td>
   <td>{{this.price}}</td>
   <td>{{this.brand}}</td>
-  <td>{{this.in_stock}}<button value={{_id}} class="btn-primary" id="buyBtn" onclick='sellStock("{{_id}}")'>Buy</button></td>
+  <td>{{this.in_stock}}</td>
+<td>{{this.Puchase}}<button value={{_id}} class="btn btn-primary" id="buyBtn" onclick='sellStock("{{_id}}")'>Buy</button></td>
   </tr>
   {{/each}}
   </tbody>
   </table>
-  </script>
+</script>
+
   <br></br>
-  <h2>Add Stock</h2>
-  Color: <input type="text" name="Color" class="colors" value=""placeholder="Please input color"required>
-  <br>
-  Size: <input type="text" name="Size" class="sizes" value=""placeholder="Please input size"required>
-  <br>
-  Brand: <input type="text" name="Brand" class="brands" value=""placeholder="Please input brand"required>
-  <br>
-  Price: <input type="text" name="Price" class="prices" value=""placeholder="Please input price"required>
-  <br>
-  Stock: <input type="text" name="Stock" class="stocks" value=""placeholder="Please input stock"required>
-  <br>
-  <input type="button" name="" value="Add" class="add">
   <div id="output"></div>
 
-  <div class="sizedrop"></div>
-  <div class="brandDrop"></div>
-  <div class="filters"></div>
- <input type="button" value="Filter" class="filterBtn">
 </body>
 <script src="shoe_api.js" charset="utf-8"></script>
 

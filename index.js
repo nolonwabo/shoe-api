@@ -5,14 +5,16 @@ var shiftModel = require('./model');
 var ObjectId = require("mongodb").ObjectId;
 var bodyParser = require('body-parser');
 app.use(function(req, res, next) {
-        res.header('Access-Control-Allow-Origin', "*");
-        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-        res.header('Access-Control-Allow-Headers', '"Origin, X-Requested-With, Content-Type, Accept"');
-        next();
+  res.header('Access-Control-Allow-Origin', "*");
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', '"Origin, X-Requested-With, Content-Type, Accept"');
+  next();
 })
 app.use(express.static('public'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 //List of all shoes.
 app.get('/api/shoes', function(req, res) {
@@ -91,10 +93,8 @@ app.get('/api/shoes/brand/:brandname/size/:size', function(req, res) {
     } else {
       res.json({
         status: "success",
-        data: {
-          brandname: dataFiltering,
-          size: dataFiltering
-        }
+        data: dataFiltering,
+
       })
     }
   })
@@ -128,8 +128,8 @@ app.post('/api/shoes/sold/:id', function(req, res) {
           data: []
         });
       }
-        if(updatedShoeInfo.in_stock <= 0){
-          updatedShoeInfo.remove()
+      if (updatedShoeInfo.in_stock <= 0) {
+        updatedShoeInfo.remove()
 
         res.json({
           status: "success",
@@ -142,78 +142,84 @@ app.post('/api/shoes/sold/:id', function(req, res) {
 //Add new shoe.
 app.post('/api/shoes', function(req, res) {
   var shoes = req.body;
-var brand= shoes.brand;
-var color= shoes.color;
-var price= shoes.price;
-var size= shoes.size;
-var in_stock= shoes.in_stock;
+  var brand = shoes.brand;
+  var color = shoes.color;
+  var price = shoes.price;
+  var size = shoes.size;
+  var in_stock = shoes.in_stock;
   shiftModel.findOneAndUpdate({
-    brand: brand,
-    color: color,
-    price: price,
-    size: size
-  }, {
-    $inc:{
-      in_stock: in_stock
-    }
-  },
-  function(err, shoeResults) {
-    if (err) {
-      return err;
-    } else if(!shoeResults){
-      shiftModel.create({
-        brand: brand,
-        color: color,
-        price: price,
-        size: size,
+      brand: brand,
+      color: color,
+      price: price,
+      size: size
+    }, {
+      $inc: {
         in_stock: in_stock
-      },
-     function(err, shoesData) {
+      }
+    },
+    function(err, shoeResults) {
       if (err) {
         return err;
-      }
-      res.json({shoesData})
+      } else if (!shoeResults) {
+        shiftModel.create({
+            brand: brand,
+            color: color,
+            price: price,
+            size: size,
+            in_stock: in_stock
+          },
+          function(err, shoesData) {
+            if (err) {
+              return err;
+            }
+            res.json({
+              shoesData
+            })
 
-      });
-    }
-  })
+          });
+      }
+    })
 })
 
 app.get('/api/size', function(req, res) {
-shiftModel.find({},function(err, sizeDropdown){
-  var sizeArray =[];
-  var sizeObject ={};
-  for (var i = 0; i < sizeDropdown.length; i++) {
-  var sizeLoop= sizeDropdown[i];
-  if(sizeObject[sizeLoop.size] === undefined){
-    sizeObject[sizeLoop.size]=sizeLoop.size;
-    sizeArray.push(sizeLoop.size);
-  }
-  }
-  if(err){
-    return(err)
-  }
-  res.json({sizeArray})
-})
+  shiftModel.find({}, function(err, sizeDropdown) {
+    var sizeArray = [];
+    var sizeObject = {};
+    for (var i = 0; i < sizeDropdown.length; i++) {
+      var sizeLoop = sizeDropdown[i];
+      if (sizeObject[sizeLoop.size] === undefined) {
+        sizeObject[sizeLoop.size] = sizeLoop.size;
+        sizeArray.push(sizeLoop.size);
+      }
+    }
+    if (err) {
+      return (err)
+    }
+    res.json({
+      sizeArray
+    })
+  })
 
 });
 
 app.get('/api/brand', function(req, res) {
-shiftModel.find({},function(err, brandDropdown){
-  var brandArray =[];
-  var brandObject ={};
-  for (var i = 0; i < brandDropdown.length; i++) {
-  var brandLoop= brandDropdown[i];
-  if(brandObject[brandLoop.brand] === undefined){
-    brandObject[brandLoop.brand]=brandLoop.brand;
-    brandArray.push(brandLoop.brand);
-  }
-  }
-  if(err){
-    return(err)
-  }
-  res.json({brandArray})
-})
+  shiftModel.find({}, function(err, brandDropdown) {
+    var brandArray = [];
+    var brandObject = {};
+    for (var i = 0; i < brandDropdown.length; i++) {
+      var brandLoop = brandDropdown[i];
+      if (brandObject[brandLoop.brand] === undefined) {
+        brandObject[brandLoop.brand] = brandLoop.brand;
+        brandArray.push(brandLoop.brand);
+      }
+    }
+    if (err) {
+      return (err)
+    }
+    res.json({
+      brandArray
+    })
+  })
 
 });
 
