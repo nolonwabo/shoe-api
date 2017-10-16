@@ -141,7 +141,7 @@ $.ajax({
   type: 'GET',
   success: function(sizeDropdownValue) {
     sizedrop.innerHTML = shoesTemp({
-      size: sizeDropdownValue.sizeArray
+      size: sizeDropdownValue.sizeArray.sort()
     })
   }
 })
@@ -152,7 +152,7 @@ $.ajax({
   type: 'GET',
   success: function(brandDropdownValue) {
     brandDrop.innerHTML = shoeBrandDropdown({
-      brand: brandDropdownValue.brandArray
+      brand: brandDropdownValue.brandArray.sort()
     })
   }
 })
