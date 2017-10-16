@@ -127,14 +127,6 @@ function sellStock(id) {
     async: true,
     dataType: "json",
     success: function(data) {
-      // showAllStock();
-      // console.log(data);
-      // console.log("------");
-      // shoeInStock.forEach(function(results){
-      //   if(results._id==data.data._id){
-      //     results.in_stock=data.data.in_stock;
-      //   }
-      // })
     },
     error: function(error) {
       alert('error')
@@ -142,9 +134,6 @@ function sellStock(id) {
   })
   showAllStock();
 }
-
-
-
 
 var sizedrop = document.querySelector('.sizedrop');
 $.ajax({

@@ -1,7 +1,9 @@
-#heading{
-  text-align: center;
-  font-size: 60px;
-  align-items: center;
+
+h1{
+  text-align: center !important;
+  font-size: 80px !important;
+  align-items: center !important;
+  font-family: 'Modak', cursive !important;
 }
 body{
   font-family: 'Aguafina Script'; font-size: 22px;
