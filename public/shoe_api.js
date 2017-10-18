@@ -13,36 +13,36 @@ var filterV = document.querySelector('.filters');
 
 var addShoeBtn = document.querySelector('.add-shoe-btn');
 
-addShoeBtn.addEventListener('click', function(){
+addShoeBtn.addEventListener('click', function() {
   $("#addModal").modal("hide");
   var colorV = document.querySelector('.colors');
-    var sizeV = document.querySelector('.sizes');
-    var brandV = document.querySelector('.brands');
-     var priceV = document.querySelector('.prices');
-    var stockV = document.querySelector('.stocks');
+  var sizeV = document.querySelector('.sizes');
+  var brandV = document.querySelector('.brands');
+  var priceV = document.querySelector('.prices');
+  var stockV = document.querySelector('.stocks');
 
-        $.ajax({
-          url: '/api/shoes',
-          type: 'POST',
-          async: true,
-          dataType: "json",
-          data: {
-            brand: brandV.value,
-            size: sizeV.value,
-            color: colorV.value,
-            price: priceV.value,
-            in_stock: stockV.value
-          },
-          success: function(data) {
-            showAllStock();
+  $.ajax({
+    url: '/api/shoes',
+    type: 'POST',
+    async: true,
+    dataType: "json",
+    data: {
+      brand: brandV.value,
+      size: sizeV.value,
+      color: colorV.value,
+      price: priceV.value,
+      in_stock: stockV.value
+    },
+    success: function(data) {
+      showAllStock();
 
-          },
-          error: function(error) {
-            console.log(error);
-            alert(error);
-          }
-        })
-      });
+    },
+    error: function(error) {
+      console.log(error);
+      alert(error);
+    }
+  })
+});
 
 
 function showAllStock() {
@@ -60,62 +60,60 @@ function showAllStock() {
 }
 showAllStock();
 
-$(document).ready(function(){
-  $('#addStock').click(function(){
+$(document).ready(function() {
+  $('#addStock').click(function() {
     $('#addModal').modal();
   });
 });
 
 
-function filterData(){
-$('.filterBtn').on('click', function() {
-  var brandFilter = document.querySelector('#brandFilter').value;
-  var sizeFilter = document.querySelector('#sizeFilter').value;
-  if(brandFilter !=="" && sizeFilter==""){
-  $.ajax({
-    url: '/api/shoes/brand/' + brandFilter,
-    type: 'GET',
-    success: function(data) {
-      table.innerHTML = shoesList({
-        shoeData: data.data
+function filterData() {
+  $('.filterBtn').on('click', function() {
+    var brandFilter = document.querySelector('#brandFilter').value;
+    var sizeFilter = document.querySelector('#sizeFilter').value;
+    if (brandFilter !== "" && sizeFilter == "") {
+      $.ajax({
+        url: '/api/shoes/brand/' + brandFilter,
+        type: 'GET',
+        success: function(data) {
+          table.innerHTML = shoesList({
+            shoeData: data.data
+          })
+        },
+        error: function(error) {
+          alert('error')
+        }
       })
-    },
-    error: function(error) {
-      alert('error')
+    } else if (brandFilter == "" && sizeFilter !== "") {
+      $.ajax({
+        url: '/api/shoes/size/' + sizeFilter,
+        type: 'GET',
+        success: function(data) {
+          table.innerHTML = shoesList({
+            shoeData: data.data
+          })
+        },
+        error: function(error) {
+          alert('error')
+        }
+      })
+    } else if (brandFilter !== "" && sizeFilter !== "") {
+      $.ajax({
+        url: '/api/shoes/brand/' + brandFilter + "/size/" + sizeFilter,
+        type: 'GET',
+        async: true,
+        dataType: "json",
+        success: function(data) {
+          table.innerHTML = shoesList({
+            shoeData: data.data
+          })
+        },
+        error: function(error) {
+          alert('error')
+        }
+      })
     }
   })
-}
-else if (brandFilter=="" && sizeFilter!=="") {
-  $.ajax({
-    url: '/api/shoes/size/' + sizeFilter,
-    type: 'GET',
-    success: function(data) {
-      table.innerHTML = shoesList({
-        shoeData: data.data
-      })
-    },
-    error: function(error) {
-      alert('error')
-    }
-  })
-}
-else if(brandFilter!=="" && sizeFilter!=="")  {
-    $.ajax({
-      url: '/api/shoes/brand/'+ brandFilter + "/size/" + sizeFilter,
-       type: 'GET',
-       async: true,
-       dataType: "json",
-       success: function(data){
-         table.innerHTML = shoesList({
-           shoeData: data.data
-        })
-     },
-       error: function(error){
-         alert('error')
-       }
-    })
-}
-})
 }
 filterData();
 
@@ -126,8 +124,7 @@ function sellStock(id) {
     type: 'POST',
     async: true,
     dataType: "json",
-    success: function(data) {
-    },
+    success: function(data) {},
     error: function(error) {
       alert('error')
     }
