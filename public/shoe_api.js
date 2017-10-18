@@ -68,6 +68,7 @@ function showAllStock() {
 })
 }
 showAllStock();
+sellStock();
 
 $(document).ready(function(){
   $('#addStock').click(function(){
@@ -115,10 +116,15 @@ else if(brandFilter!=="" && sizeFilter!=="")  {
        async: true,
        dataType: "json",
        success: function(data){
-         table.innerHTML = shoesList({
+         if(data.brand===undefined){
+           table.innerHTML ="Shoe not found, Please try another one.";
+         }
+         else{table.innerHTML = shoesList({
            shoeData: data.data
         })
+      }
      },
+
        error: function(error){
          alert('error')
        }
